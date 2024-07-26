@@ -14,7 +14,8 @@ model User {
   age       Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  House     House[]
+  ownerid     House[] @relation("ownerid")
+  Builtbyid     House[] @relation("Builtbyid")
 }
 
 // └─$ npx prisma generate  (to create a basic schema )
@@ -25,6 +26,10 @@ model House {
   id           String  @id @default(uuid())
   address      String  @unique
   wifipassword String?
-  owner        User    @relation(fields: [userid], references: [id])
+  owner        User    @relation("ownerid",fields: [userid], references: [id])
   userid       String
+  BuiltBy       User @relation("Builtbyid",fields: [BuiltBy_id],references: [id])
+  BuiltBy_id  String 
+  createdat DateTime @default(now())
+ updatedat DateTime @updatedAt
 }
