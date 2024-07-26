@@ -1,21 +1,30 @@
- generator client{
-    provider = "prisma-client-js"
- }
+generator client {
+  provider = "prisma-client-js"
+}
 
- datasource db{
-    provider = "mysql"
-    url = env("DATABASE_URL")
-  }
-    
-model User{
-    id Int @id @default(autoincrement())
-    firstname String
-    lastname String
-    age Int 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-  }
-  
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  firstname String
+  lastname  String
+  age       Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  House     House[]
+}
+
 // └─$ npx prisma generate  (to create a basic schema )
 // └─$ npx prisma migrate dev --name init --create-only (to only show for testing)
-// └─$ npx prisma migrate deploy  (to deploy the actual migration )                     
+// └─$ npx prisma migrate deploy  (to deploy the actual migration )       
+
+model House {
+  id           String  @id @default(uuid())
+  address      String  @unique
+  wifipassword String?
+  owner        User    @relation(fields: [userid], references: [id])
+  userid       String
+}
