@@ -22,6 +22,20 @@ app.post("/", async (req, res) => {
   }
 });
 
+app.put("/:id", async (req, res) => {
+  const id = parseInt(req.params.id);
+  const age = req.body.age;
+  const updatedage = await prisma.user.update({
+    where: {
+      id: id,
+    },
+    data: {
+      age: age,
+    },
+  });
+  res.json(updatedage);
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
