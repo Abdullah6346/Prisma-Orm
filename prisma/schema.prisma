@@ -15,6 +15,7 @@ model User{
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
   }
+  
 // └─$ npx prisma generate  (to create a basic schema )
 // └─$ npx prisma migrate dev --name init --create-only (to only show for testing)
 // └─$ npx prisma migrate deploy  (to deploy the actual migration )                     
