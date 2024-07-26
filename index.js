@@ -36,6 +36,16 @@ app.put("/:id", async (req, res) => {
   res.json(updatedage);
 });
 
+app.delete("/:id", async (req, res) => {
+  const id = parseInt(req.params.id);
+  const deleteuser = await prisma.user.delete({
+    where: {
+      id: id,
+    },
+  });
+  res.json(deleteuser);
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
