@@ -57,6 +57,15 @@ app.post("/house", async (req, res) => {
       .json({ error: "An error occurred while creating the house" });
   }
 });
+app.get("/house", async (req, res) => {
+  const allHouses = await prisma.house.findMany({
+    include: {
+      owner: true,
+      builtby: true,
+    },
+  });
+  res.json(allHouses);
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
