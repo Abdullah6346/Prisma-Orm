@@ -46,9 +46,16 @@ app.delete("/:id", async (req, res) => {
   res.json(deleteuser);
 });
 
-app.post("/house ", async (req, res) => {
-  const cre_hu_user = await prisma.house.create({ data: req.body });
-  res.json(cre_hu_user);
+app.post("/house", async (req, res) => {
+  try {
+    const cre_hu_user = await prisma.house.create({ data: req.body });
+    res.json(cre_hu_user);
+  } catch (error) {
+    console.error(error); // Log the error for debugging
+    res
+      .status(500)
+      .json({ error: "An error occurred while creating the house" });
+  }
 });
 
 app.listen(port, () => {
