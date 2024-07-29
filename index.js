@@ -10,7 +10,7 @@ app.get("/", async (req, res) => {
   res.json(users);
 });
 
-app.post("/", async (req, res) => {
+app.post("/create_user_data", async (req, res) => {
   try {
     const createdata = await prisma.user.create({ data: req.body });
     res.json(createdata);
@@ -44,6 +44,11 @@ app.delete("/:id", async (req, res) => {
     },
   });
   res.json(deleteuser);
+});
+
+app.post("/house ", async (req, res) => {
+  const cre_hu_user = await prisma.house.create({ data: req.body });
+  res.json(cre_hu_user);
 });
 
 app.listen(port, () => {
