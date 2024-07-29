@@ -38,6 +38,7 @@ model House {
 model School {
   id              String      @id @default(uuid())
   schoolnames     String
+  schooladdress String
   child_school_id Userchild[] @relation("schoolid")
   createdat       DateTime    @default(now())
   updatedat       DateTime    @updatedAt

@@ -80,6 +80,18 @@ app.get("/house/:id", async (req, res) => {
   res.json(allHouses);
 });
 
+app.post("/school", async (req, res) => {
+  try {
+    const cre_sch_dat = await prisma.school.create({ data: req.body });
+    res.json(cre_sch_dat);
+  } catch (error) {
+    console.error(error); // Log the error for debugging
+    res
+      .status(500)
+      .json({ error: "An error occurred while creating the school" });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
