@@ -51,7 +51,7 @@ app.post("/house", async (req, res) => {
     const cre_hu_user = await prisma.house.create({ data: req.body });
     res.json(cre_hu_user);
   } catch (error) {
-    console.error(error); // Log the error for debugging
+    console.error(error);
     res
       .status(500)
       .json({ error: "An error occurred while creating the house" });
@@ -85,10 +85,28 @@ app.post("/school", async (req, res) => {
     const cre_sch_dat = await prisma.school.create({ data: req.body });
     res.json(cre_sch_dat);
   } catch (error) {
-    console.error(error); // Log the error for debugging
+    console.error(error);
     res
       .status(500)
       .json({ error: "An error occurred while creating the school" });
+  }
+});
+app.post("/child", async (req, res) => {
+  try {
+    const { names, child_school_id, father_names_id } = req.body;
+
+    const cre_chil_dat = await prisma.userchild.create({
+      data: {
+        names: names,
+        child_school_id: { connect: { id: child_school_id } },
+        father_names_id: { connect: { id: father_names_id } },
+      },
+    });
+
+    res.json(cre_chil_dat);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
