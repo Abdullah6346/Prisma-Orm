@@ -8,14 +8,15 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
+  id        String      @id @default(uuid())
   firstname String
   lastname  String
   age       Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  ownerid   House[]  @relation("ownerid")
-  builtbyid House[]  @relation("builtbyid")
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  ownerid   House[]     @relation("ownerid")
+  builtbyid House[]     @relation("builtbyid")
+  fatherid  Userchild[] @relation("fatherid")
 }
 
 // └─$ npx prisma generate  (to create a basic schema )
@@ -32,4 +33,23 @@ model House {
   builtbyid    String
   createdat    DateTime @default(now())
   updatedat    DateTime @updatedAt
+}
+
+model School {
+  id              String      @id @default(uuid())
+  schoolnames     String
+  child_school_id Userchild[] @relation("schoolid")
+  createdat       DateTime    @default(now())
+  updatedat       DateTime    @updatedAt
+}
+
+model Userchild {
+  id              String   @id @default(uuid())
+  names           String
+  child_school_id School   @relation("schoolid", fields: [schoolid], references: [id])
+  schoolid        String
+  father_names_id User     @relation("fatherid", fields: [fatherid], references: [id])
+  fatherid        String
+  createdat       DateTime @default(now())
+  updatedat       DateTime @updatedAt
 }
