@@ -67,6 +67,19 @@ app.get("/house", async (req, res) => {
   res.json(allHouses);
 });
 
+//  getting a specific a house by its id
+app.get("/house/:id", async (req, res) => {
+  const id = req.params.id;
+  const allHouses = await prisma.house.findUnique({
+    where: { id: id },
+    include: {
+      owner: true,
+      builtby: true,
+    },
+  });
+  res.json(allHouses);
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
